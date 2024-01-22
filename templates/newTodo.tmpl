@@ -1,6 +1,6 @@
-<div hx-get="/toggle-comp-state/{{.id}}" hx-swap="outerHTML">
-  <input class="hidden" type="checkbox" id="{{.id}}" {{if .checked}}checked{{end}} />
-  <label class="flex items-center h-10 px-2 rounded cursor-pointer hover:bg-gray-900" for="{{.id}}">
+<div hx-get="/toggle-comp-state/{{.data.Id}}" hx-swap="outerHTML">
+  <input class="hidden" type="checkbox" id="{{.data.Id}}" {{if .data.IsComplete}}checked{{end}} />
+  <label class="flex items-center h-10 px-2 rounded cursor-pointer hover:bg-gray-900" for="{{.data.Id}}">
     <span class="flex items-center justify-center w-5 h-5 text-transparent border-2 border-gray-500 rounded-full">
       <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
         <path fill-rule="evenodd"
@@ -8,6 +8,6 @@
           clip-rule="evenodd" />
       </svg>
     </span>
-    <span class="ml-4 text-sm" style="user-select: none;">{{.todo}}</span>
+    <span class="ml-4 text-sm" style="user-select: none;">{{.data.Todo}}</span>
   </label>
 </div>

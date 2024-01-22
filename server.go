@@ -10,9 +10,9 @@ import (
 )
 
 type todo struct {
-	id         int
-	todo       string
-	isComplete bool
+	Id         int
+	Todo       string
+	IsComplete bool
 }
 
 func main() {
@@ -25,7 +25,9 @@ func main() {
 	r.Static("/assets", "./assets")
 
 	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.tmpl", gin.H{})
+		c.HTML(http.StatusOK, "index.tmpl", gin.H{
+			"data": allTodo,
+		})
 	})
 
 	r.POST("/add-todo", func(c *gin.Context) {
@@ -38,9 +40,7 @@ func main() {
 			allTodo = append(allTodo, tmp)
 
 			c.HTML(http.StatusOK, "newTodo.tmpl", gin.H{
-				"todo":    tmp.todo,
-				"id":      tmp.id,
-				"checked": tmp.isComplete,
+				"data": tmp,
 			})
 		}
 	})
@@ -55,17 +55,13 @@ func main() {
 
 		for i := 0; i < len(allTodo); i++ {
 			v := *allTodo[i]
-			if v.id == id {
-				v.isComplete = !v.isComplete
+			if v.Id == id {
+				v.IsComplete = !v.IsComplete
 
 				allTodo[i] = &v
 
-				fmt.Println(allTodo[i])
-
 				c.HTML(http.StatusOK, "newTodo.tmpl", gin.H{
-					"todo":    v.todo,
-					"id":      v.id,
-					"checked": v.isComplete,
+					"data": v,
 				})
 				return
 			}
