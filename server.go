@@ -16,20 +16,23 @@ type todo struct {
 }
 
 func main() {
+	// Storing All Todo in memory
 	allTodo := []*todo{}
 	setTodo := map[string]bool{}
 
+	// GIN CONFIG
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
-
 	r.Static("/assets", "./assets")
 
+	// Loading All Todo in memory
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
 			"data": allTodo,
 		})
 	})
 
+	// Adding New Todo
 	r.POST("/add-todo", func(c *gin.Context) {
 		title := c.PostForm("todo")
 
@@ -45,7 +48,8 @@ func main() {
 		}
 	})
 
-	r.GET("/toggle-comp-state/:id", func(c *gin.Context) {
+	// Toggling Complete State
+	r.PATCH("/toggle-comp-state/:id", func(c *gin.Context) {
 		idPar := c.Param("id")
 		id, err := strconv.Atoi(idPar)
 
